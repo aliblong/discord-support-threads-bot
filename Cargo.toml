@@ -1,5 +1,5 @@
 [package]
-name = "discord_support_thread_bot"
+name = "discord_support_threads_bot"
 version = "0.1.0"
 authors = ["Aaron Liblong <liblonga@hotmail.com>"]
 edition = "2018"

@@ -1,1 +1,1 @@
-web: cargo run
+web: ./target/release/discord_support_threads_bot
