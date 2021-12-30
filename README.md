@@ -1,7 +1,8 @@
 # Discord Support Threads Bot
 
 This bot serves an elegant solution for managing communication between a support team and users in a Discord server.
-After the backend has been deployed with a configuration including the target server and channel, a user simply direct-messages the bot with a thread title, then the bot creates a **private thread** in that channel with the form `{requester (nick)name} | {requester-provided title}` (truncated to 100 bytes), and invites the requester to it.
+
+After the backend has been deployed with a configuration including the target server and channel, a **user simply direct-messages the bot with a thread title**, then the bot creates a **private thread** in that channel with the form `{requester (nick)name} | {requester-provided title}` (truncated to 100 bytes), and invites the requester to it.
 The only users who can view this thread are those who have explicitly been invited to it (starting with the requester), and those with the `Manage Threads` permission, which you can restrict to the support team.
 From here, anyone in the thread can invite further users.
 
@@ -31,6 +32,7 @@ This could cost your community as much as 35 USD/mo, or as little as nothing, if
 
 ### This bot must be self-hosted
 Currently, this bot doesn't support multiple servers in a single deployment, meaning I can't host it for use on your own server.
+I made this choice to simplify deployment -- no db layer to store server-specific configuration is needed.
 However, it's very easy to deploy yourself in any number of ways.
 I'll provide a brief guide to deployment through Heroku:
 1. [Create your own Discord app + bot](https://discord.com/developers/applications).
