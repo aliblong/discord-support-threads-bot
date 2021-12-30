@@ -2,6 +2,7 @@
 
 This bot serves an elegant solution for managing communication between a support team and users in a Discord server.
 After the backend has been deployed with a configuration including the target server and channel, a user simply direct-messages the bot with a thread title, then the bot creates a **private thread** in that channel with the form `{requester (nick)name} | {requester-provided title}` (truncated to 100 bytes), and invites the requester to it.
+Only those with the `Manage Threads` permission, which you can restrict to the support team, and those who are explicitly invited to the support thread can view it.
 
 ## Motivation
 
@@ -40,4 +41,4 @@ The permissions your bot will need are `Send Messages in Threads` and `Manage Th
 Add a credit card in order to unlock enough free dyno hours to run your bot 24/7 for free.
 5. Create a Heroku app and connect it to your forked repo.
 6. In the Resources tab of the Heroku web console, switch on the worker dyno.
-7. In the Settings tab, populate `Config Vars` with the variables indicated in `[.env_template](.env_template)`
+7. In the Settings tab, populate `Config Vars` with the variables indicated in [`.env_template`](.env_template).
