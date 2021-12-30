@@ -2,7 +2,8 @@
 
 This bot serves an elegant solution for managing communication between a support team and users in a Discord server.
 After the backend has been deployed with a configuration including the target server and channel, a user simply direct-messages the bot with a thread title, then the bot creates a **private thread** in that channel with the form `{requester (nick)name} | {requester-provided title}` (truncated to 100 bytes), and invites the requester to it.
-Only those with the `Manage Threads` permission, which you can restrict to the support team, and those who are explicitly invited to the support thread can view it.
+The only users who can view this thread are those who have explicitly been invited to it (starting with the requester), and those with the `Manage Threads` permission, which you can restrict to the support team.
+From here, anyone in the thread can invite further users.
 
 ## Motivation
 
