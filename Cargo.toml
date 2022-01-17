@@ -7,7 +7,10 @@ edition = "2018"
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
-serenity = { default-features = false, features = ["client", "gateway", "rustls_backend", "model"] }
+serenity = { default-features = false, features = ["cache", "client", "gateway", "framework", "standard_framework", "rustls_backend", "model", "utils"] }
 tokio = { version = "1.0", features = ["macros", "rt-multi-thread"] }
 dotenv = "*"
 unicode-segmentation = "*"
+sqlx = { version = "*", features = ["postgres", "runtime-tokio-rustls"] }
+anyhow = "*"
+thiserror = "*"
