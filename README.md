@@ -27,3 +27,17 @@ Support Threads bot simply automates the creation of such threads.
 There is one primary downside to this bot: **Private Threads is a premium feature on Discord**!
 Access to private thread creation is currently gated behind the Server Boosts subscription model -- namely, Server Level 2, which requires 7 boosts per month.
 This could cost your community as much as 35 USD/mo, or as little as nothing, if you have enough users with Discord Nitro are willing to contribute their complimentary server boosts.
+
+## I've read the above and want to use this bot on my tier-2-boosted server! Gimme the link!
+
+[Click here to invite this bot to your server](https://discord.com/api/oauth2/authorize?client_id=925419280776982568&permissions=343597383680&scope=bot).
+
+## Configuration
+
+After inviting this bot to your server, you'll need to run at least the `set-support-channel` command.
+The default command prefix is `!st `, so the full thing you'll need to type into a channel where the bot has view access is `!st set-support-channel <channel>`, where `<channel>` is of course where you'll mention the channel, e.g. `#support`.
+You can also change the default command prefix with the `set-command-prefix` command, and you'll need to quote the single required argument if you want the prefix to include whitespace, e.g. `!st set-command-prefix "my-cool-prefix "`, which would make subsequent invocations like `my-cool-prefix set-support-channel #my-support-channel`.
+
+## I want to leave feedback about the bot!
+
+For general questions and feedback, ping me on [Discussions](https://github.com/aliblong/discord-support-threads-bot/discussions). If you think you've encountered a bug, please open an [Issue](https://github.com/aliblong/discord-support-threads-bot/issues).
