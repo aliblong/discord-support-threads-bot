@@ -35,7 +35,7 @@ pub enum DmError {
 
 /// Given the requester's name and a message, create a thread title by combining them as
 /// `"{requester name} | {message}`, then truncating to 100 bytes (max limit for thread name).
-fn generate_thread_name(author_name: &str, msg_graphemes: Graphemes) -> String {
+pub fn generate_thread_name(author_name: &str, msg_graphemes: Graphemes) -> String {
     const MAX_THREAD_NAME_LENGTH_BYTES: usize = 100;
     let mut byte_count = 0usize;
     author_name.graphemes(true)
@@ -83,7 +83,7 @@ async fn discern_guild<'a>(ctx: &Context, msg: &'a Message) -> Result<(GuildId, 
     // Seems to be no way to check mutual guilds,
     // so have to check user's membership in each one in the db.
     for (guild_id, optional_channel_id) in
-            crate::db::get_list_of_supported_guilds_ordered_by_id(pool).await?.into_iter() {
+            crate::db::get_list_of_supported_guilds_and_channels_ordered_by_guild_id(pool).await?.into_iter() {
         // This function is a simple way to check guild membership, so it should probably return
         // some sort of Option rather than corresponding no membership to an Err val.
         // I'm throwing away the error information, so if there is a genuine error, it will be

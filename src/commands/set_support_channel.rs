@@ -31,7 +31,7 @@ async fn set_support_channel(
 
     // Message should always have an associated guild ID, because this handler is configured only
     // to respond to messages sent within a guild.
-    crate::db::update_support_channel_id(pool, msg.guild_id.unwrap(), channel_id.0 as i64).await?;
+    crate::db::update_support_channel_id(pool, msg.guild_id.unwrap(), channel_id).await?;
     msg.reply(ctx, format!("Support channel has been updated to {}", arg)).await?;
     Ok(())
 }
