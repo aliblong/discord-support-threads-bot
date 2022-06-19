@@ -38,7 +38,7 @@ pub async fn handle_application_command(
 }
 
 pub async fn unregister_all_global_application_commands(client: &HttpClient) {
-    log::info!("Unregistering all global application commands");
+    log::warn!("Unregistering all global application commands");
     for ac in client.get_global_application_commands().await.unwrap() {
         log::warn!("{:?}", ac);
         client
@@ -52,7 +52,7 @@ pub async fn unregister_all_guild_application_commands(
     client: &HttpClient,
     target_guild_id: GuildId,
 ) {
-    log::info!(
+    log::warn!(
         "Unregistering all application commands for guild {}",
         target_guild_id
     );
@@ -74,6 +74,8 @@ pub async fn unregister_all_guild_application_commands(
 
 pub async fn register_global_application_commands(client: &HttpClient) {
     let commands = build_application_commands_interfaces();
+    log::warn!("Registering global application commands");
+    log::warn!("{:?}", commands);
     // copied invocation from
     // https://docs.rs/serenity/latest/src/serenity/model/guild/guild_id.rs.html#1456-1469
     match client
@@ -90,6 +92,7 @@ pub async fn register_global_application_commands(client: &HttpClient) {
 
 pub async fn register_guild_application_commands(client: &HttpClient, target_guild_id: GuildId) {
     let commands = build_application_commands_interfaces();
+    log::warn!("Registering application commands for guild {}", target_guild_id);
     log::warn!("{:?}", commands);
     // copied invocation from
     // https://docs.rs/serenity/latest/src/serenity/model/guild/guild_id.rs.html#1456-1469
