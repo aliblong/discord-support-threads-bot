@@ -2,8 +2,8 @@
 
 This bot serves an elegant solution for managing communication between a support team and users in a Discord server.
 
-A **user simply direct-messages the bot with a thread title** (and a leading server ID if the user and bot share multiple servers), then the bot creates a **private thread** in that channel with the form `{requester (nick)name} | {requester-provided title}` (truncated to 100 bytes), and invites the requester to it.
-The only users who can view this thread are those who have explicitly been invited to it (starting with the requester), and those with the `Manage Threads` permission, which you can restrict to the support team.
+A **user simply invokes the `/support` command with the desired thread title**, then the bot creates a **private thread** in the support channel (previously chosen by an administrator, using the `/support_channel` command), with the form `{requester (nick)name} | {requester-provided title}` (truncated to 100 bytes), and invites the requester to it.
+The only users who can view this thread are those who have explicitly been invited to it (starting with the requester), and those with the `Manage Threads` permission, which you can restrict to a support team.
 From here, anyone in the thread can invite further users.
 
 ## Motivation
@@ -38,9 +38,7 @@ You may either host this bot yourself or invite one that I have deployed publicl
 
 ### Configuration
 
-After inviting this bot to your server, you'll need to run at least the `set-support-channel` command.
-The default command prefix is `!st `, so the full thing you'll need to type into a channel where the bot has view access is `!st set-support-channel <channel>`, where `<channel>` is of course where you'll mention the channel, e.g. `#support`.
-You can also change the default command prefix with the `set-command-prefix` command, and you'll need to quote the single required argument if you want the prefix to include whitespace, e.g. `!st set-command-prefix "my-cool-prefix "`, which would make subsequent invocations like `my-cool-prefix set-support-channel #my-support-channel`.
+After inviting this bot to your server, you'll need to run at least the `/support_channel` command in order to set the channel where the bot will open support threads.
 
 ## Data collection
 

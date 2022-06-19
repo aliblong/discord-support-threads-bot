@@ -1,1 +1,1 @@
-worker: ./target/release/discord_support_threads_bot
+worker: ./target/release/discord_support_threads_bot bot
