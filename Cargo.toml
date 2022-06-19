@@ -16,3 +16,5 @@ sqlx = { version = "*", features = ["postgres", "runtime-tokio-rustls"] }
 anyhow = "*"
 thiserror = "*"
 const_format = "*"
+log = "*"
+env_logger = "*"
