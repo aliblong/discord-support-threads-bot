@@ -71,7 +71,8 @@ pub fn build_application_command_interface() -> CreateApplicationCommand {
         .name("support")
         .description(HELP_EXPLANATION)
         // permissions required to execute the command
-        .default_member_permissions(serenity::model::permissions::Permissions::empty())
+        // seems like requiring Permissions::empty() doesn't actually work
+        //.default_member_permissions(serenity::model::permissions::Permissions::VIEW_CHANNEL)
         .create_option(|option| {
             option
                 // Putting a space in the arg to `name` will cause the whole `set_application_commands`

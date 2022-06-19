@@ -42,6 +42,8 @@ pub fn build_application_command_interface() -> CreateApplicationCommand {
     command_interface
         .name("help")
         .description("Learn how to use this bot")
-        .default_member_permissions(serenity::model::permissions::Permissions::empty());
+        // seems like requiring Permissions::empty() doesn't actually work
+        //.default_member_permissions(serenity::model::permissions::Permissions::empty())
+        ;
     command_interface
 }
