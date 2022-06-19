@@ -1,13 +1,10 @@
-use std::env::var;
 use anyhow::Result;
 use clap::{Parser, Subcommand};
+use std::env::var;
 
 use serenity::{
     client::Context,
-    model::{
-        gateway,
-        interactions::Interaction,
-    },
+    model::{gateway, interactions::Interaction},
     prelude::TypeMapKey,
 };
 
@@ -28,8 +25,8 @@ enum Subcommands {
 
 pub type HttpClient = serenity::http::client::Http;
 
-mod db;
 mod commands;
+mod db;
 
 struct Handler;
 
@@ -42,7 +39,8 @@ impl serenity::client::EventHandler for Handler {
     }
 
     async fn ready(&self, ctx: Context, ready: gateway::Ready) {
-        ctx.set_activity(gateway::Activity::listening("/help")).await;
+        ctx.set_activity(gateway::Activity::listening("/help"))
+            .await;
         println!("{} is connected!", ready.user.name);
     }
 }
@@ -59,26 +57,28 @@ async fn main() -> Result<()> {
     // Simply include your configuration in a `.env` file
     dotenv::dotenv().ok();
     let token = var("DISCORD_TOKEN").expect("Expected a Discord token in the environment");
-    let bot_user_id = var("BOT_USER_ID").expect("Expected env var BOT_USER_ID")
+    let bot_user_id = var("BOT_USER_ID")
+        .expect("Expected env var BOT_USER_ID")
         .parse::<u64>()?;
-    let optional_target_guild_id = match var("TARGET_GUILD_ID"){
-        Ok(guild_id_str) => {
-            Some(guild_id_str.parse::<u64>()?.into())
-        }
-        Err(_) => None
+    let optional_target_guild_id = match var("TARGET_GUILD_ID") {
+        Ok(guild_id_str) => Some(guild_id_str.parse::<u64>()?.into()),
+        Err(_) => None,
     };
     match &cli.subcommand {
         Subcommands::Bot => {
             let database_url = var("DATABASE_URL").expect("Expected env var DATABASE_URL");
             // It doesn't feel like it matters whether we use `connect` or `connect_lazy`
-            let db_pool = sqlx::postgres::PgPoolOptions::new().connect(&database_url).await?;
+            let db_pool = sqlx::postgres::PgPoolOptions::new()
+                .connect(&database_url)
+                .await?;
             let framework = serenity::framework::standard::StandardFramework::new();
             let mut client =
                 serenity::client::Client::builder(&token, gateway::GatewayIntents::empty())
-                .event_handler(Handler)
-                .application_id(bot_user_id)
-                .framework(framework)
-                .await.expect("Err creating client");
+                    .event_handler(Handler)
+                    .application_id(bot_user_id)
+                    .framework(framework)
+                    .await
+                    .expect("Err creating client");
             {
                 // Insert configuration into the bot
                 let mut data = client.data.write().await;
@@ -88,7 +88,7 @@ async fn main() -> Result<()> {
             if let Err(why) = client.start().await {
                 log::error!("Client error: {:?}", why);
             }
-        },
+        }
         Subcommands::RegisterSlashCommands | Subcommands::UnregisterSlashCommands => {
             let client = HttpClient::new_with_application_id(&token, bot_user_id);
             if let Some(target_guild_id) = optional_target_guild_id {
@@ -102,7 +102,7 @@ async fn main() -> Result<()> {
                     commands::register_global_application_commands(&client).await;
                 }
             }
-        },
+        }
     }
     Ok(())
 }
