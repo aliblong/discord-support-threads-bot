@@ -1,3 +1,6 @@
+mod commands;
+mod db;
+
 use anyhow::Result;
 use clap::{Parser, Subcommand};
 use std::env::var;
@@ -7,6 +10,8 @@ use serenity::{
     model::{gateway, interactions::Interaction},
     prelude::TypeMapKey,
 };
+
+pub type HttpClient = serenity::http::client::Http;
 
 #[derive(Parser)]
 #[clap(author, version, about, long_about = None)]
@@ -23,13 +28,7 @@ enum Subcommands {
     UnregisterSlashCommands,
 }
 
-pub type HttpClient = serenity::http::client::Http;
-
-mod commands;
-mod db;
-
 struct Handler;
-
 #[serenity::async_trait]
 impl serenity::client::EventHandler for Handler {
     async fn interaction_create(&self, ctx: Context, interaction: Interaction) {
@@ -44,8 +43,8 @@ impl serenity::client::EventHandler for Handler {
         println!("{} is connected!", ready.user.name);
     }
 }
-pub struct DbPool;
 
+pub struct DbPool;
 impl TypeMapKey for DbPool {
     type Value = sqlx::postgres::PgPool;
 }
@@ -68,7 +67,7 @@ async fn main() -> Result<()> {
         Subcommands::Bot => {
             let database_url = var("DATABASE_URL").expect("Expected env var DATABASE_URL");
             // It doesn't feel like it matters whether we use `connect` or `connect_lazy`
-            let db_pool = sqlx::postgres::PgPoolOptions::new()
+            let pool = sqlx::postgres::PgPoolOptions::new()
                 .connect(&database_url)
                 .await?;
             let framework = serenity::framework::standard::StandardFramework::new();
@@ -82,7 +81,7 @@ async fn main() -> Result<()> {
             {
                 // Insert configuration into the bot
                 let mut data = client.data.write().await;
-                data.insert::<DbPool>(db_pool);
+                data.insert::<DbPool>(pool);
             }
 
             if let Err(why) = client.start().await {

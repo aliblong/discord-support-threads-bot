@@ -23,25 +23,6 @@ pub enum SupportThreadError {
     UnconfiguredGuild,
 }
 
-pub fn build_application_command_interface() -> CreateApplicationCommand {
-    let mut command_interface = CreateApplicationCommand::default();
-    command_interface
-        .name("support")
-        .description(HELP_EXPLANATION)
-        // permissions required to execute the command
-        .default_member_permissions(serenity::model::permissions::Permissions::empty())
-        .create_option(|option| {
-            option
-                // Putting a space in the arg to `name` will cause the whole `set_application_commands`
-                // function to silently fail!
-                .name("title")
-                .description("The title for your support thread")
-                .kind(application_command::ApplicationCommandOptionType::String)
-                .required(true)
-        });
-    command_interface
-}
-
 pub async fn handle(
     ctx: Context,
     command: &application_command::ApplicationCommandInteraction,
@@ -84,9 +65,28 @@ pub async fn handle(
     }
 }
 
+pub fn build_application_command_interface() -> CreateApplicationCommand {
+    let mut command_interface = CreateApplicationCommand::default();
+    command_interface
+        .name("support")
+        .description(HELP_EXPLANATION)
+        // permissions required to execute the command
+        .default_member_permissions(serenity::model::permissions::Permissions::empty())
+        .create_option(|option| {
+            option
+                // Putting a space in the arg to `name` will cause the whole `set_application_commands`
+                // function to silently fail!
+                .name("title")
+                .description("The title for your support thread")
+                .kind(application_command::ApplicationCommandOptionType::String)
+                .required(true)
+        });
+    command_interface
+}
+
 /// Given the requester's name and a message, create a thread title by combining them as
 /// `"{requester name} | {message}`, then truncating to 100 bytes (max limit for thread name).
-pub fn generate_thread_name(author_name: &str, msg_graphemes: Graphemes) -> String {
+fn generate_thread_name(author_name: &str, msg_graphemes: Graphemes) -> String {
     const MAX_THREAD_NAME_LENGTH_BYTES: usize = 100;
     let mut byte_count = 0usize;
     author_name

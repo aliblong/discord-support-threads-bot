@@ -1,15 +1,13 @@
-use crate::HttpClient;
-use serenity::{
-    builder::CreateApplicationCommands,
-    model::{
-        id::GuildId,
-        interactions,
-    },
-};
-
 pub mod help;
 pub mod support;
 pub mod support_channel;
+
+use serenity::{
+    builder::CreateApplicationCommands,
+    model::{id::GuildId, interactions},
+};
+
+use crate::HttpClient;
 
 pub async fn handle_application_command(
     ctx: serenity::client::Context,
@@ -90,15 +88,6 @@ pub async fn register_global_application_commands(client: &HttpClient) {
     };
 }
 
-fn build_application_commands_interfaces() -> CreateApplicationCommands {
-    let mut commands = CreateApplicationCommands::default();
-    commands
-        .add_application_command(help::build_application_command_interface())
-        .add_application_command(support::build_application_command_interface())
-        .add_application_command(support_channel::build_application_command_interface());
-    commands
-}
-
 pub async fn register_guild_application_commands(client: &HttpClient, target_guild_id: GuildId) {
     let commands = build_application_commands_interfaces();
     // copied invocation from
@@ -119,4 +108,13 @@ pub async fn register_guild_application_commands(client: &HttpClient, target_gui
             log::error!("{:?}", err);
         }
     };
+}
+
+fn build_application_commands_interfaces() -> CreateApplicationCommands {
+    let mut commands = CreateApplicationCommands::default();
+    commands
+        .add_application_command(help::build_application_command_interface())
+        .add_application_command(support::build_application_command_interface())
+        .add_application_command(support_channel::build_application_command_interface());
+    commands
 }
