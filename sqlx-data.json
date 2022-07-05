@@ -1,0 +1,36 @@
+{
+  "db": "PostgreSQL",
+  "2e3b6473c1a92fdf69e2d5dc8e4f8d8a8087ec851d3e526e6eabcf9677f459b6": {
+    "describe": {
+      "columns": [
+        {
+          "name": "support_channel_id",
+          "ordinal": 0,
+          "type_info": "Int8"
+        }
+      ],
+      "nullable": [
+        true
+      ],
+      "parameters": {
+        "Left": [
+          "Int8"
+        ]
+      }
+    },
+    "query": "select support_channel_id\n        from guilds\n        where id = $1"
+  },
+  "7fc460b693cd0c2a46ddda48ac08054e6a1245338e8c125cc0907204a31fc0e7": {
+    "describe": {
+      "columns": [],
+      "nullable": [],
+      "parameters": {
+        "Left": [
+          "Int8",
+          "Int8"
+        ]
+      }
+    },
+    "query": "update guilds\n        set support_channel_id = $2\n        where id = $1"
+  }
+}
